@@ -1,0 +1,78 @@
+services:
+  db:
+    image: postgres:16.2
+    container_name: wallstr_db
+    command: postgres -c log_statement=all
+    volumes:
+      - ./.db/:/var/lib/postgresql/data/
+      - ./scripts/create_multiple_postgresql_databases.sh:/docker-entrypoint-initdb.d/09_create_multiple_postgresql_databases.sh
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=db,db_test
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password123
+    ports:
+      - 5441:5432 # exposed 5441 port for avoiding conflicts with other instances
+
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: wallstr_rabbitmq
+    volumes:
+      - ./.rabbitmq:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password123
+    ports:
+      - 5672:5672
+      - 15672:15672 # Management dashboard
+
+  redis:
+    image: redis/redis-stack:7.2.0-v13
+    container_name: wallstr_redis
+    volumes:
+      - ./.redis:/data/
+    ports:
+      - 6379:6379
+      - 8001:8001 # RedisInsight dashboard
+
+  minio:
+    image: minio/minio:latest
+    container_name: wallstr_minio
+    volumes:
+      - ./.minio:/data/
+    entrypoint: sh
+    command: -c 'mkdir -p /data/wallstr && /usr/bin/docker-entrypoint.sh server /data --console-address ":9001"'
+    environment:
+      - MINIO_ROOT_USER=user
+      - MINIO_ROOT_PASSWORD=password123
+    ports:
+      - 9000:9000
+      - 9001:9001 # Management dashboard
+
+  weaviate:
+    image: semitechnologies/weaviate:1.28.4
+    container_name: wallstr_weaviate
+    volumes:
+      - ./.weaviate:/var/lib/weaviate
+    environment:
+      # https://weaviate.io/developers/weaviate/config-refs/env-vars
+      - CLUSTER_HOSTNAME=wallstr-weaviate
+      - RAFT_ENABLE_ONE_NODE_RECOVERY=true
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - ENABLE_MODULES=text2vec-ollama,text2vec-openai
+    ports:
+      - 8080:8080
+      - 50051:50051
+
+  ollama:
+    image: ollama/ollama:0.5.7
+    container_name: wallstr_ollama
+    volumes:
+      - ./.ollama:/root/.ollama
+    ports:
+      - 11434:11434
+
+  nlm-ingestor:
+    image: ghcr.io/nlmatics/nlm-ingestor:latest
+    container_name: wallstr_nlm_ingestor
+    ports:
+      - 5001:5001

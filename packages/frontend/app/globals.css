@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin 'daisyui';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.animate-press {
+  @apply transition-transform duration-[125ms] ease-in-out active:scale-90;
+}
+
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes infinite-scroll-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 25s linear infinite;
+}
+
+.animate-infinite-scroll-reverse {
+  animation: infinite-scroll-reverse 25s linear infinite;
+}
+
+.animate-infinite-scroll:hover,
+.animate-infinite-scroll-reverse:hover {
+  animation-play-state: paused;
+}

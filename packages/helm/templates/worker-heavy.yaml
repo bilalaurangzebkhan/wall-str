@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wallstr.fullname" . }}-worker-heavy
+  labels:
+    {{- include "wallstr.labels" . | nindent 4 }}
+    app.kubernetes.io/component: worker-heavy
+spec:
+  replicas: {{ .Values.workerHeavy.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "wallstr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: worker-heavy
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "wallstr.labels" . | nindent 8 }}
+        app.kubernetes.io/component: worker-heavy
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "wallstr.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: worker-heavy
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag  }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["dramatiq"]
+          args: ["wallstr.worker.heavy", "-t", "1", "-p", "1", "-Q", "parse"]
+          {{- with .Values.workerHeavy.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.workerHeavy.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }} 

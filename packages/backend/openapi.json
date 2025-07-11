@@ -1,0 +1,1612 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "WallStr.chat",
+        "summary": "WallStr.chat OpenAPI schema",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Signup",
+                "operationId": "1::signup",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignUpRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Signup is disabled"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Signin",
+                "operationId": "1::signin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh-token": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Refresh Token",
+                "operationId": "1::refresh_token",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/auth/signout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Signout",
+                "operationId": "1::signout",
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/auth/me": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Get Current User",
+                "operationId": "1::get_current_user",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/auth/me/settings": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Update User Settings",
+                "operationId": "1::update_user_settings",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserSettings"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/chats/{slug}": {
+            "get": {
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Get Chat",
+                "operationId": "2::get_chat",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Slug"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Chat"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chats/{slug}/messages": {
+            "get": {
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Get Chat Messages",
+                "operationId": "2::get_chat_messages",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Slug"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "Cursor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Paginated_ChatMessage_"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Send Chat Message",
+                "operationId": "2::send_chat_message",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Slug"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MessageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "Chat not found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chats": {
+            "post": {
+                "tags": [
+                    "chat"
+                ],
+                "summary": "Create Chat",
+                "operationId": "2::create_chat",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MessageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Chat"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "chat"
+                ],
+                "summary": "List Chats",
+                "operationId": "2::list_chats",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "Cursor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Paginated_Chat_"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{id}/mark-uploaded": {
+            "put": {
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Mark Document Uploaded",
+                "description": "Mark document as uploaded",
+                "operationId": "3::mark_document_uploaded",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/section/{section_id}": {
+            "get": {
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Get Document By Section",
+                "operationId": "3::get_document_by_section",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "section_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Section Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentSection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{document_id}/url": {
+            "get": {
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Get Document Url",
+                "operationId": "3::get_document_url",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Document Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentPreview"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Document not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/{document_id}/process": {
+            "post": {
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Trigger Processing",
+                "description": "Trigger document processing manually",
+                "operationId": "3::trigger_processing",
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "title": "Document Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Document not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/documents/reprocess": {
+            "post": {
+                "tags": [
+                    "documents"
+                ],
+                "summary": "Reprocess Documents",
+                "description": "Current api triggers reparsing documents\nIt either sync with the latest inference_model and version or all existing documents in the database",
+                "operationId": "reprocess_documents",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": []
+                    }
+                ]
+            }
+        },
+        "/sse/": {
+            "get": {
+                "summary": "Connect",
+                "operationId": "4::connect",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPUnauthorizedError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "summary": "Root",
+                "operationId": "root",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Root"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/config": {
+            "get": {
+                "summary": "Get Config",
+                "operationId": "get_config",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConfigResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AccessToken": {
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "title": "Token"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "title": "Token Type",
+                        "default": "bearer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "token"
+                ],
+                "title": "AccessToken"
+            },
+            "AuthConfig": {
+                "properties": {
+                    "allow_signup": {
+                        "type": "boolean",
+                        "title": "Allow Signup"
+                    },
+                    "providers": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Providers"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "allow_signup",
+                    "providers"
+                ],
+                "title": "AuthConfig"
+            },
+            "Chat": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "title": "Slug"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "messages": {
+                        "$ref": "#/components/schemas/Paginated_ChatMessage_"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "slug",
+                    "title",
+                    "messages"
+                ],
+                "title": "Chat"
+            },
+            "ChatMessage": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/ChatMessageRole"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    },
+                    "message_type": {
+                        "$ref": "#/components/schemas/ChatMessageType"
+                    },
+                    "documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/Document"
+                        },
+                        "type": "array",
+                        "title": "Documents"
+                    },
+                    "pending_documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/PendingDocument"
+                        },
+                        "type": "array",
+                        "title": "Pending Documents",
+                        "default": []
+                    },
+                    "memo": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Memo"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "role",
+                    "content",
+                    "message_type",
+                    "documents",
+                    "created_at"
+                ],
+                "title": "ChatMessage"
+            },
+            "ChatMessageRole": {
+                "type": "string",
+                "enum": [
+                    "user",
+                    "assistant"
+                ],
+                "title": "ChatMessageRole"
+            },
+            "ChatMessageType": {
+                "type": "string",
+                "enum": [
+                    "text",
+                    "memo"
+                ],
+                "title": "ChatMessageType"
+            },
+            "ConfigResponse": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "default": "Wallstr"
+                    },
+                    "version": {
+                        "type": "string",
+                        "title": "Version"
+                    },
+                    "auth": {
+                        "$ref": "#/components/schemas/AuthConfig"
+                    },
+                    "llm_models": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "claude-3.5-sonnet"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "deepseek"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "deepseek-r1"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "gemini-2.0-flash"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "gemma-3-27b"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "gpt-4o"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "gpt-4o-mini"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "llama3.1-405b"
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "llama3-70b"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Llm Models"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "version",
+                    "auth",
+                    "llm_models"
+                ],
+                "title": "ConfigResponse"
+            },
+            "Document": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/DocumentStatus"
+                    },
+                    "error": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Error"
+                    },
+                    "errored_at": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Errored At"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "filename",
+                    "status"
+                ],
+                "title": "Document"
+            },
+            "DocumentPayload": {
+                "properties": {
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "doc_type": {
+                        "$ref": "#/components/schemas/DocumentType"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "filename",
+                    "doc_type"
+                ],
+                "title": "DocumentPayload"
+            },
+            "DocumentPreview": {
+                "properties": {
+                    "document_title": {
+                        "type": "string",
+                        "title": "Document Title"
+                    },
+                    "document_url": {
+                        "type": "string",
+                        "title": "Document Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "document_title",
+                    "document_url"
+                ],
+                "title": "DocumentPreview"
+            },
+            "DocumentSection": {
+                "properties": {
+                    "document_title": {
+                        "type": "string",
+                        "title": "Document Title"
+                    },
+                    "document_url": {
+                        "type": "string",
+                        "title": "Document Url"
+                    },
+                    "page_number": {
+                        "type": "integer",
+                        "title": "Page Number"
+                    },
+                    "bboxes": {
+                        "items": {
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Bboxes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "document_title",
+                    "document_url",
+                    "page_number",
+                    "bboxes"
+                ],
+                "title": "DocumentSection"
+            },
+            "DocumentStatus": {
+                "type": "string",
+                "enum": [
+                    "uploading",
+                    "uploaded",
+                    "processing",
+                    "ready"
+                ],
+                "title": "DocumentStatus"
+            },
+            "DocumentType": {
+                "type": "string",
+                "enum": [
+                    "pdf",
+                    "doc",
+                    "docx",
+                    "xls",
+                    "xlsx"
+                ],
+                "title": "DocumentType"
+            },
+            "HTTPUnauthorizedError": {
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "detail"
+                ],
+                "title": "HTTPUnauthorizedError"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "Memo": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "user_prompt": {
+                        "type": "string",
+                        "title": "User Prompt"
+                    },
+                    "sections": {
+                        "items": {
+                            "$ref": "#/components/schemas/MemoSection"
+                        },
+                        "type": "array",
+                        "title": "Sections"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "user_prompt",
+                    "sections"
+                ],
+                "title": "Memo"
+            },
+            "MemoSection": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "group": {
+                        "type": "string",
+                        "title": "Group"
+                    },
+                    "aspect": {
+                        "type": "string",
+                        "title": "Aspect"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    },
+                    "index": {
+                        "type": "integer",
+                        "title": "Index"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "group",
+                    "aspect",
+                    "content",
+                    "index"
+                ],
+                "title": "MemoSection"
+            },
+            "MessageRequest": {
+                "properties": {
+                    "message": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Message"
+                    },
+                    "documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/DocumentPayload"
+                        },
+                        "type": "array",
+                        "title": "Documents"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "message",
+                    "documents"
+                ],
+                "title": "MessageRequest"
+            },
+            "Paginated_ChatMessage_": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/ChatMessage"
+                        },
+                        "type": "array",
+                        "title": "Items"
+                    },
+                    "cursor": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cursor"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "items",
+                    "cursor"
+                ],
+                "title": "Paginated[ChatMessage]"
+            },
+            "Paginated_Chat_": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/Chat"
+                        },
+                        "type": "array",
+                        "title": "Items"
+                    },
+                    "cursor": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Cursor"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "items",
+                    "cursor"
+                ],
+                "title": "Paginated[Chat]"
+            },
+            "PendingDocument": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "presigned_url": {
+                        "type": "string",
+                        "title": "Presigned Url"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "filename",
+                    "presigned_url"
+                ],
+                "title": "PendingDocument"
+            },
+            "SignInRequest": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "title": "SignInRequest"
+            },
+            "SignUpRequest": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    },
+                    "username": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Username"
+                    },
+                    "fullname": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Fullname"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "email",
+                    "password",
+                    "username",
+                    "fullname"
+                ],
+                "title": "SignUpRequest"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "title": "Id"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "fullname": {
+                        "type": "string",
+                        "title": "Fullname"
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/UserSettings"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "email",
+                    "username",
+                    "fullname",
+                    "settings"
+                ],
+                "title": "User"
+            },
+            "UserSettings": {
+                "properties": {
+                    "llm_model": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "claude-3.5-sonnet"
+                            },
+                            {
+                                "type": "string",
+                                "const": "deepseek"
+                            },
+                            {
+                                "type": "string",
+                                "const": "deepseek-r1"
+                            },
+                            {
+                                "type": "string",
+                                "const": "gemini-2.0-flash"
+                            },
+                            {
+                                "type": "string",
+                                "const": "gemma-3-27b"
+                            },
+                            {
+                                "type": "string",
+                                "const": "gpt-4o"
+                            },
+                            {
+                                "type": "string",
+                                "const": "gpt-4o-mini"
+                            },
+                            {
+                                "type": "string",
+                                "const": "llama3.1-405b"
+                            },
+                            {
+                                "type": "string",
+                                "const": "llama3-70b"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Llm Model"
+                    },
+                    "simple_mode": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Simple Mode"
+                    }
+                },
+                "type": "object",
+                "title": "UserSettings"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+pnpm frontend:lint
+pnpm frontend:format:check
+pnpm frontend:ts
+pnpm backend:lint
+pnpm backend:mypy

@@ -1,0 +1,102 @@
+name: frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - packages/backend/**
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint
+        run: |
+          pnpm frontend:lint --max-warnings=0
+          pnpm frontend:format:check
+
+      - name: Run Typescript linter
+        run: pnpm frontend:ts
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "version=$(pnpm -F wallstr_frontend exec playwright --version)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Cache Playwright browsers
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm -F wallstr_frontend exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm frontend:test

@@ -1,0 +1,163 @@
+short_memo_template:
+  system_prompt: |
+    You need to write a memo on a company.
+    You are getting specific section of this memo.
+    The memo should be concise and to the point, every thesis should have a link to.
+    The memo should be written in a professional tone and should be free of spelling and grammatical errors.
+    Be concise, mark with bold the numbers and percentages, and use bullet points where necessary.
+  groups:
+    - name: Business Segments & Product Performance
+      prompts:
+        - name: Company Description
+          prompt: |
+            Provide a structured overview of the company’s business model, core offerings, and competitive positioning, with a detailed breakdown of key business segments. Ensure all responses include precise numerical values, such as revenue contribution (% of total), growth rates, gross margin, or EBITDA (if available). The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth.  Responses should be 1-2 sentences max per section.
+            BUSINESS OVERVIEW
+            Industry & Business Model: Describe the company’s industry, primary operations, and business model (B2B, B2C, SaaS, hardware, services). Highlight how it generates revenue and which key market segments it serves.
+            Core Products & Services: Outline the company’s core offerings and their primary use cases. Identify key product categories or service lines, explaining their role in revenue generation.
+            Customer Segments & Market Reach: Specify who the company serves (enterprises, consumers, government) and across which geographies it operates. If relevant, provide insights into market concentration and customer dependence.
+            SEGMENT BREAKDOWN & ANALYSIS
+            Segment 1 – [Segment Name]: Report the segment’s revenue ($B), percentage of total revenue, and YoY growth. If available, include the gross margin or EBITDA margin to indicate profitability.
+            Growth Drivers: Identify what is driving growth in this segment (e.g., product launches, demand increase, regional expansion).
+            Challenges & Risks: Highlight competitive pressures, regulatory risks, supply chain issues, or other significant obstacles affecting this segment’s performance.
+            (Repeat for each major business segment, following the same structure.)
+            VALUE PROPOSITION & COMPETITIVE ADVANTAGE
+            Market Positioning: Explain how the company differentiates itself in the industry, whether through cost efficiency, technology leadership, brand strength, or scalability.
+            Competitive Strengths: Compare the company’s pricing power, economies of scale, or customer relationships against competitors. If available, provide market share insights or relative performance indicators.
+            REVENUE MODEL & GROWTH DRIVERS
+            Revenue Streams: Detail how the company generates revenue (e.g., product sales, subscription fees, licensing, advertising). Specify which revenue model contributes the most.
+            Future Growth Opportunities: Highlight expected market expansion, industry trends, or strategic initiatives aimed at driving future revenue growth.
+            Growth Drivers: The segment’s growth was driven by [factors such as demand increase, new product launches, geographic expansion]. Key customers include [major industries or clients].
+            Challenges & Risks: The segment faces pressure from [competitive landscape, supply chain constraints, regulatory risks]. Market trends suggest [future outlook].
+            (Repeat for each major business segment, following the same structure.)
+            Value Proposition & Competitive Advantage
+            Market Positioning: The company differentiates itself through [cost efficiency, innovation, scalability, ecosystem effects]. It holds a competitive edge due to [proprietary technology, economies of scale, customer relationships].
+            Competitive Strengths: Compared to competitors, the company benefits from [pricing power, vertical integration, brand loyalty]. Its strategic focus on [specific initiatives] has strengthened its market share in [key regions or industries].
+            Revenue Model & Growth Drivers
+            Revenue Streams: The company generates revenue through [product sales, subscription fees, licensing, advertising]. The largest source of revenue is [primary segment].
+            Growth Outlook: Future revenue expansion is expected from [market expansion, product innovation, industry trends]. Management is focusing on [specific strategies] to enhance long-term growth and mitigate risks.
+
+    - name: Industry & Competitive Positioning
+      prompts:
+        - name: Market Size & Growth, market share and competitors
+          prompt: |
+            Provide a structured overview of market size, industry growth, competitive positioning, and future risks, ensuring responses include precise numerical values, market share estimates, and benchmarking against competitors. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            MARKET SIZE & GROWTH
+            Total Addressable Market (TAM): Report the total market size ($B) and YoY growth rate. If available, include projections on Serviceable Addressable Market (SAM) relevant to the company’s business segments.
+            Industry Growth Trends: Identify the historical CAGR and forecasted market expansion over the next 5-10 years. Highlight key macroeconomic, technological, or regulatory factors driving industry expansion
+            COMPETITIVE LANDSCAPE
+            Key Competitors: Identify direct and indirect competitors in the industry. If available, compare market share, product offerings, pricing models, customer base, and geographic presence.
+            Competitive Positioning: Report the company’s market share (%) in its key business segments and how it compares to its top competitors. Highlight competitive strengths and weaknesses, such as pricing power, economies of scale, brand loyalty, or distribution network.
+            FUTURE OUTLOOK & INDUSTRY DISRUPTION RISKS
+            Emerging Trends: Highlight new market developments (e.g., AI adoption, cloud computing, regulatory shifts, supply chain challenges) that could reshape the industry.
+            Disruption Risks: Assess potential threats to the company’s market position, including new entrants, technological advancements, regulatory risks, or shifting consumer preferences.
+
+    - name: Risk Factors & Downside Scenarios
+      prompts:
+        - name: Risks
+          prompt: |
+            Provide a structured analysis of the key risks facing the company, focusing on regulatory, competitive, economic, and execution risks. Ensure responses include specific numerical estimates, historical performance data, and concrete mitigation strategies. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            REGULATORY RISKS
+            Industry Regulations & Compliance: Identify key regulations impacting the company (e.g., data privacy laws, environmental mandates, trade restrictions). Specify how they affect operations, product offerings, or geographic expansion.
+            Revenue Exposure: Estimate the percentage of revenue affected by regulatory risks. If available, reference historical fines, legal disputes, or compliance-related losses.
+            Mitigation Strategies: Outline how the company reduces regulatory risks through compliance programs, legal frameworks, or lobbying efforts.
+            COMPETITIVE RISKS
+            Market Competition: Identify key competitors and their market positioning. Compare market share, funding strength, and product differentiation against the company.
+            Competitive Threats: Highlight risks from pricing pressure, new entrants, or technological disruption. If applicable, provide YoY market share trends to assess position changes.
+            Mitigation Strategies: Explain how the company defends market share through pricing strategies, innovation, or M&A activity.
+            ECONOMIC RISKS
+            Macroeconomic Sensitivity: Assess the company's exposure to economic downturns, inflation, or interest rate hikes. Specify which revenue streams are most affected.
+            Historical Performance: Provide data on revenue impact during past recessions (e.g., 2008 financial crisis, COVID-19 downturn).
+            Mitigation Strategies: Describe how the company hedges against economic risks, such as cost optimization, diversified revenue streams, or strategic pricing adjustments.
+            EXECUTION RISKS
+            Operational & Supply Chain Risks: Identify key supply chain dependencies, production vulnerabilities, or geopolitical risks affecting operations.
+            Financial Impact: Quantify how past disruptions (e.g., component shortages, logistics delays) have affected revenue or gross margins.
+            Mitigation Strategies: Outline company efforts in supplier diversification, automation, or nearshoring to ensure operational stability.
+
+    - name: Financial & Valuation Analysis
+      prompts:
+        - name: Revenue
+          prompt: |
+            Provide a structured overview of the company's revenue performance, including absolute revenue figures, YoY growth, and key drivers behind growth or decline. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            LATEST QUARTER REVENUE
+            Quarterly Revenue & Growth: Report the company’s total revenue ($B) for the most recent quarter and its YoY growth (%). Highlight whether growth was driven by pricing strategies, volume expansion, or product mix changes.
+            Key Revenue Drivers: Identify specific factors influencing revenue trends, such as new market penetration, increased demand, or macroeconomic effects (e.g., currency fluctuations, inflation).
+            REVENUE PERFORMANCE OVER TIME
+            Year-to-Date (YTD) Revenue: Provide cumulative revenue ($B) for the current fiscal year and compare it to the same period in the previous year, noting YoY growth trends.
+            Full-Year Revenue (Past 3 Fiscal Years): Report total revenue for the last three fiscal years, including YoY growth rates. Identify major inflection points such as M&A activity, product expansions, or external economic shifts that influenced revenue.
+            Historical Trends: Highlight any long-term revenue patterns, such as accelerating or decelerating growth rates, seasonal variations, or shifts in key revenue sources.
+            REVENUE DRIVERS & FUTURE OUTLOOK
+            Revenue Mix & Key Contributors: Detail which segments contributed the most to revenue and whether growth was concentrated in specific business units or regions.
+            Future Growth Potential: Identify strategic initiatives or industry trends expected to drive future revenue growth, such as expanding product offerings, increasing geographic reach, or capitalizing on industry tailwinds.
+        - name: Expenses
+          prompt: |
+            Provide a structured overview of the company’s expense trends, including absolute values, YoY changes, and expense breakdown by category. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            LATEST QUARTER EXPENSES
+            Total Operating Expenses & Growth: Report the company’s total expenses ($B) for the most recent quarter and its YoY growth (%). Highlight whether cost changes were driven by inflation, operational efficiency, or scaling investments.
+            Expense Breakdown: Categorize expenses by major components (e.g., Cost of Goods Sold (COGS), R&D, Sales & Marketing, General & Administrative (G&A)). Specify % of revenue for each category, if available.
+            EXPENSE PERFORMANCE OVER TIME
+            Year-to-Date (YTD) Expenses: Provide cumulative expenses ($B) for the current fiscal year and compare it to the same period in the previous year, noting YoY growth trends.
+            Full-Year Expenses (Past 3 Fiscal Years): Report total expenses for the last three fiscal years, including YoY growth rates. Identify major cost fluctuations due to operational changes, supply chain disruptions, or strategic investments.
+            Historical Trends: Highlight any long-term expense patterns, such as declining cost efficiencies, increasing labor costs, or shifts in spending priorities.
+            COST DRIVERS & FUTURE OUTLOOK
+            Key Cost Drivers: Identify specific factors influencing expense trends, such as higher raw material costs, increased hiring, or technology investments.
+            Expense Optimization Strategies: Outline any cost-cutting initiatives, automation efforts, or supply chain restructuring that may help reduce future expense growth and improve margins.
+        - name: Gross Margin
+          prompt: |
+            Provide a structured overview of the company’s gross margin performance, including absolute percentage, YoY change, and key factors influencing margin trends. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            LATEST QUARTER GROSS MARGIN
+            Gross Margin & YoY Change: Report the gross margin (%) for the most recent quarter and its YoY change (bps or %). Highlight whether margin expansion or contraction was driven by pricing, cost efficiencies, or revenue mix shifts.
+            Key Margin Drivers: Identify specific factors impacting margin performance, such as higher-margin product growth, inventory provisions, supply chain efficiencies, or raw material cost fluctuations.
+            GROSS MARGIN PERFORMANCE OVER TIME
+            Year-to-Date (YTD) Margin: Provide the YTD gross margin (%) vs. the prior year, noting YoY changes and any operational factors influencing trends.
+            Full-Year Margins (Past 3 Fiscal Years): Report gross margin (%) for the last three fiscal years, noting YoY trends and margin expansion or compression factors. If applicable, highlight the impact of cost structure changes, product pricing shifts, or strategic cost optimizations.
+            Historical Trends: Highlight multi-year margin trends, such as consistent expansion, cyclical fluctuations, or margin volatility due to market conditions.
+            MARGIN DRIVERS & FUTURE OUTLOOK
+            Key Margin Drivers: Identify specific factors affecting profitability, such as product mix shifts, pricing strategy adjustments, or cost reductions.
+            Margin Optimization Strategies: Outline how the company plans to improve or sustain margins, including supply chain efficiencies, operational automation, or premium pricing strategies.
+        - name: Operating Income
+          prompt: |
+            Provide a structured overview of the company’s operating income performance, including absolute values, YoY changes, and key factors influencing profitability. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            LATEST QUARTER OPERATING INCOME
+            Operating Income & YoY Change: Report the operating income ($B) for the most recent quarter and its YoY growth (%), highlighting the primary factors driving expansion or contraction.
+            Key Profitability Drivers: Identify the factors impacting operating income, such as revenue growth, cost efficiencies, changes in operating leverage, or shifts in expense management.
+            OPERATING INCOME PERFORMANCE OVER TIME
+            Year-to-Date (YTD) Operating Income: Provide the YTD operating income ($B) vs. the prior year, noting YoY changes and key influences on profitability.
+            Full-Year Operating Income (Past 3 Fiscal Years): Report operating income ($B) for the last three fiscal years, highlighting YoY trends, margin expansion or compression, and major cost structure changes.
+            Historical Trends: Identify multi-year trends, such as operating leverage improvements, cost discipline strategies, or significant expense fluctuations affecting profitability.
+            PROFITABILITY DRIVERS & FUTURE OUTLOOK
+            Key Cost & Revenue Impacts: Outline specific elements affecting operating income, including pricing strategies, expense controls, or margin shifts in key segments.
+            Operating Efficiency Strategies: Describe how the company plans to optimize cost structures, leverage automation, or adjust pricing strategies to enhance operating margins.
+        - name: Net Income
+          prompt: |
+            Provide a structured overview of the company’s net income performance, including absolute values, YoY changes, and key factors influencing profitability.The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+            LATEST QUARTER NET INCOME
+            Net Income & YoY Change: Report the net income ($B) for the most recent quarter and its YoY growth (%), highlighting key factors such as revenue growth, margin changes, or expense trends.
+            Key Profitability Drivers: Identify specific elements impacting net income, including gross margin shifts, operating cost trends, non-operating income/expenses, and tax impacts.
+            NET INCOME PERFORMANCE OVER TIME
+            Year-to-Date (YTD) Net Income: Provide YTD net income ($B) vs. prior year, noting YoY changes and major profitability influences.
+            Full-Year Net Income (Past 3 Fiscal Years): Report net income ($B) for the last three fiscal years, highlighting YoY trends, margin improvements or declines, and cost structure shifts.
+            Historical Trends: Identify long-term profitability patterns, such as earnings volatility, cost structure evolution, or tax strategy changes.
+            PROFITABILITY DRIVERS & FUTURE OUTLOOK
+            Key Cost & Revenue Impacts: Outline how gross margin expansion, cost efficiencies, or external factors are shaping net income trends.
+            Strategic Initiatives: Describe company efforts to sustain or grow profitability, including expense management, tax planning, or capital allocation strategies.
+        - name: Balance sheet
+          prompt: |
+            Provide a structured analysis of the company’s balance sheet, emphasizing key financial metrics, trends, and capital structure changes. The response should be concise, structured, and fact-based, following the format below. Deliver insights in the fewest words necessary while maintaining analytical depth. Responses should be 1-2 sentences max per section.
+
+            LATEST QUARTER BALANCE SHEET
+            Total Assets & YoY Change: Report total assets ($B) for the latest quarter and YoY change (%), breaking down key components like cash & equivalents, receivables, inventory, and property & equipment.
+            Total Liabilities & YoY Change: Provide total liabilities ($B) and YoY change (%), detailing short-term and long-term debt, accounts payable, and accrued liabilities.
+            Shareholders’ Equity: Report equity value ($B), retained earnings, and common stock, highlighting major changes due to stock issuance, buybacks, or dividends.
+            Net Debt Calculation: Calculate Net Debt = Total Debt – Cash & Equivalents, indicating whether the company is in a net cash or net debt position.
+            MULTI-YEAR COMPARATIVE ANALYSIS
+            YoY Changes in Key Metrics: Compare assets, liabilities, and equity ($B) for the past three fiscal years, identifying major trends in leverage, liquidity, and capital structure.
+            Leverage & Asset Efficiency Trends: Assess whether leverage is increasing or decreasing, and analyze asset turnover, working capital efficiency, or changes in capital allocation strategy.
+            Capital Structure Shifts: Highlight significant debt issuance, equity dilution, stock buybacks, or strategic refinancing decisions.
+            DEBT & LIQUIDITY ANALYSIS
+            Debt-to-Equity (D/E) Ratio: Report Total Debt / Shareholders’ Equity, assessing financial leverage trends.
+            Interest Coverage Ratio: Provide Operating Income / Interest Expense, evaluating the company’s ability to cover debt obligations.
+            Cash Flow Impact on Capital Structure: Analyze how operating cash flow, debt repayment, and shareholder distributions are affecting liquidity and balance sheet strength.
+        - name: Financials table
+          prompt: |
+            Provide a structured overview of the company’s financial performance, consolidating all core metrics into a single table. Include precise numerical values in $ billions (or % where applicable) and show Year-over-Year (YoY) changes to highlight growth trends. Always include margins for gross profit, operating income, and net income. Report full-year (FY) data for the last three fiscal years. Ensure all numerical values are precise, formatted consistently, and include comparative YoY trends.
+            The table should be structured for clear readability.

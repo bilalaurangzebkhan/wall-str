@@ -1,0 +1,94 @@
+{
+  "name": "wallstr_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.11.1"
+  },
+  "packageManager": "pnpm@9.15.3",
+  "scripts": {
+    "dev": "SENTRY_SUPPRESS_TURBOPACK_WARNING=1 next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write **/*.ts",
+    "format:check": "prettier --check **/*.ts",
+    "ts": "tsc --noEmit",
+    "tsw": "tsc --noEmit --watch",
+    "storybook": "pnpm dlx msw init && storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build",
+    "test": "pnpm dlx msw init && playwright test",
+    "generate_openapi": "openapi-ts"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.7.1",
+    "@next/third-parties": "^15.2.0",
+    "@sentry/nextjs": "^9",
+    "@tanstack/react-query": "^5.64.1",
+    "@tanstack/react-query-devtools": "^5.64.1",
+    "ag-grid-community": "^33.1.0",
+    "ag-grid-react": "^33.1.0",
+    "date-fns": "^4.1.0",
+    "es-toolkit": "^1.32.0",
+    "eventemitter3": "^5.0.1",
+    "html-to-text": "^9.0.5",
+    "next": "15.1.4",
+    "next-themes": "^0.4.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "react-icons": "^5.4.0",
+    "react-markdown": "^9.0.3",
+    "react-pdf": "^9.2.1",
+    "remark-gfm": "^4.0.0",
+    "tailwind-merge": "^3.0.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/playwright": "^0.10.2",
+    "@chromatic-com/storybook": "^3.2.3",
+    "@eslint/eslintrc": "^3",
+    "@hey-api/openapi-ts": "^0.62.3",
+    "@playwright/experimental-ct-react": "^1.49.1",
+    "@playwright/test": "^1.49.1",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/addon-themes": "^8.4.7",
+    "@storybook/addon-viewport": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/nextjs": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/test": "^8.4.7",
+    "@tailwindcss/postcss": "4.0.6",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/eslint-plugin-query": "^5.62.16",
+    "@types/html-to-text": "^9.0.4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "chromatic": "^11.22.2",
+    "daisyui": "5.0.0-beta.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-storybook": "^0.11.2",
+    "msw": "^2.7.0",
+    "msw-storybook-addon": "^2.0.4",
+    "postcss": "^8",
+    "prettier": "^3.4.2",
+    "storybook": "^8.4.7",
+    "tailwindcss": "4.0.6",
+    "typescript": "^5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "wallstr",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=20.11.1"
+  },
+  "type": "module",
+  "packageManager": "pnpm@9.15.3",
+  "description": "wallstrAI",
+  "scripts": {
+    "build": "pnpm -F wallstr_frontend build",
+    "start": "pnpm -F wallstr_frontend start",
+    "frontend:dev": "pnpm -F wallstr_frontend dev",
+    "frontend:lint": "pnpm -F wallstr_frontend lint",
+    "frontend:format:check": "pnpm -F wallstr_frontend format:check",
+    "frontend:ts": "pnpm -F wallstr_frontend ts",
+    "frontend:test": "pnpm -F wallstr_frontend test",
+    "frontend:generate_openapi": "pnpm -F wallstr_frontend generate_openapi",
+    "generate_openapi": "pnpm backend:generate_openapi && pnpm frontend:generate_openapi",
+    "storybook": "pnpm -F wallstr_frontend storybook",
+    "docker-compose": "docker-compose -f packages/backend/docker-compose.yaml up",
+    "backend:dev": "cd packages/backend && task dev",
+    "backend:worker": "cd packages/backend && task worker",
+    "backend:worker:heavy": "cd packages/backend && task worker:heavy",
+    "backend:format": "cd packages/backend && task format",
+    "backend:lint": "cd packages/backend && task lint",
+    "backend:mypy": "cd packages/backend && task mypy",
+    "backend:generate_openapi": "cd packages/backend && task generate_openapi",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "Guro Bokum <jiojiajiu@gmail.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7"
+  }
+}
